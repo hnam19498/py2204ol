@@ -565,27 +565,25 @@
 	</section>
 	<script>
 		$(document).ready(function() {
-			$(".add-to-cart").each(function() {
-				$(this).click(function() {
-					let url = $(this).data('href');
-					if ($(this).data('logged-user') === 'True'){
-						$.ajax({
-							type: "GET",
-							url: url, 
-							success: function(data){
-								$("sup.badge").text(data.quantity);
-								$("#alert-add-product").show();
-								setTimeout(function() {$("#alert-add-product").hide();}, 1500);},
-	
-							error: function(xhr, textStatus, errorThrown){
-								console.log(errorThrown);
-							}
-						})
-					}
-					else{
-						window.location.href = url;
-					}
-				});
+			$(".add-to-cart").click(function() {
+				let url = $(this).attr('data-href');
+				if ($(this).data('logged-user') === 'True'){
+					$.ajax({
+						type: "GET",
+						url: url, 
+						success: function(data){
+							$("sup.badge").text(data.quantity);
+							$("#alert-add-product").show();
+							setTimeout(function() {$("#alert-add-product").hide();}, 1500);},
+
+						error: function(xhr, textStatus, errorThrown){
+							console.log(errorThrown);
+						}
+					})
+				}
+				else{
+					window.location.href = url;
+				}
 			});
 		});
 	</script>
