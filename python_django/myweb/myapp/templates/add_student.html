@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <label for="name">Tên</label>
+        <input type="text" name="name" id="name"><br>
+        <label for="age">Tuổi</label>
+        <input type="number" min="0" id="age" name="age"><br>
+        <label for="gender">Giới tính</label>
+        <input type="radio" name="gender" id="nam" value="True">
+        <label for="gender">Nam</label>
+        <input type="radio" name="gender" id="nu" value="False">
+        <label for="gender">Nữ</label><br>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email"><br>
+        <label for="phone">SĐT</label>
+        <input type="phone" name="phone" id="phone"><br>
+        <input type="submit" name="" id="">
+    </form>
+</body>
+</html>

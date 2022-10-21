@@ -1,0 +1,23 @@
+{% load myfilter %}
+
+<nav style="margin-left: 100px" aria-label="Page navigation example">
+    <ul class="pagination {{ class_name }}">
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></li>
+        {% endif %}
+        <!-- Tạo 1 vòng lặp để hiển thị -->
+        {% for page in page_obj.paginator.num_pages|make_range %}
+            <li class="page-item {% if page == page_obj.number %} active {% endif %}"><a class="page-link" href="?page={{page}}">{{ page }}</a></li>
+        {% endfor %}
+        
+        {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+<div>
+    <p>Trang hiện tại: {{ page_obj.number }}</p>
+    <p>Số trang đã chia: {{ page_obj.paginator.num_pages }}</p>
+    <p></p>
+</div>

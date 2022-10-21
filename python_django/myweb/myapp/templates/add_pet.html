@@ -1,0 +1,66 @@
+{% extends 'base/base.html' %}
+<!-- <form action="" method="post">
+    {% csrf_token %}
+    <label for="pet_id">ID</label>
+    <input type="text" name="pet_id" id="pet_id"><br>
+    <label for="pet_name">Name</label>
+    <input type="text" name="pet_name" id="pet_name"><br>
+    <label for="pet_age">Age</label>
+    <input type="number" name="pet_age" id="pet_age" min="0"><br>
+    <label for="pet_type">Type</label>
+    <select id="pet_type" name="pet_type">
+        <option value="cat">Cat</option>
+        <option value="dog">Dog</option>
+    </select><br>
+    <label for="pet_weight">Weight</label>
+    <input type="number" name="pet_weight" id="pet_weight"><br>
+    <label for="pet_length">Length</label>
+    <input type="number" name="pet_length" id="pet_length"><br>
+    <label for="pet_color">Color</label>
+    <input type="color" name="pet_color" id="pet_color"><br>
+    <input type="checkbox" name="pet_vacinated" id="pet_vacinated" value="True">
+    <label for="pet_vacinated">Vacinated</label><br>
+    <input type="checkbox" name="pet_dewormed" id="pet_dewormed" value="True">
+    <label for="pet_dewormed">Dewormed</label><br>
+    <input type="checkbox" name="pet_sterilized" id="pet_sterilized" value="True">
+    <label for="pet_sterilized">Sterilized</label><br>
+    <input type="submit" value="add" name="" id=""> -->
+{% block title %}
+    Add pet
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-6 offset-3">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {% if field.field.widget.input_type == 'checkbox' %}
+                            <div class="form-group form-check">
+                                {{ field }}
+                                {{ field.label }}
+                                {% for error in field.errors %}
+                                    <div style="display: block;" class="invalid-feedback">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="form-group {% if field.errors %} is-invalid {% else %} is-valid {% endif %}">
+                                {{ field.label }}
+                                {{ field }}
+                                {% for error in field.errors %}
+                                    <div class="invalid-feedback" style="display: block">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <input type="submit" value="add" name="" id="">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

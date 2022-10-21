@@ -1,0 +1,88 @@
+{% extends 'base/baseshop.html' %}
+{% load static %}
+{% load humanize %}
+{% load shopfilter %}
+{% block title %}
+	Cart
+{% endblock title %}
+{% block content %}
+	<section id="cart_items">
+		<div class="container">
+			<div class="breadcrumbs">
+				<ol class="breadcrumb">
+				  <li><a href="{% url 'index' %}">Home</a></li>
+				  <li class="active">Shopping Cart</li>
+				</ol>
+			</div>
+			{% if orderdetails %}
+				<div class="table-responsive cart_info">
+					<table class="table table-condensed">
+						<thead>
+							<tr class="cart_menu" style="text-align: center;">
+								<td class="image">Item</td>
+								<td class="description">Product name</td>
+								<td class="price">Price</td>
+								<td class="quantity">Quantity</td>
+								<td class="total">Total</td>
+								<td></td>
+							</tr>
+						</thead>
+						<tbody>
+							{% for orderdetail in orderdetails %}
+								<tr>
+									<td class="cart_product">
+										<a href="{% url 'view_product' product_id=orderdetail.product.id %}"><img src="{{ orderdetail.product.image }}" alt="" style="width:55px;"></a>
+									</td>
+									<td class="cart_description" style="text-align: center;">
+										<h5 style="font-size: 18px;"><a href="{% url 'view_product' product_id=orderdetail.product.id %}">{{orderdetail.product.name}}</a></h5>
+										<p>Product ID: 1468-{{orderdetail.product.id}}</p>
+									</td>
+									<td class="cart_price">
+										<p style="text-align: center;">{{orderdetail.product.price|intcomma}}đ</p>
+									</td>
+									<td class="cart_quantity" >
+										<div class="cart_quantity_button">
+											<a class="cart_quantity_down" href="{% url 'change_quantity' action='decrease' product_id=orderdetail.product.id %}" style="margin-left: 50px;"> - </a>
+											<input disabled class="cart_quantity_input" type="text" name="quantity" value="{{orderdetail.quantity}}" autocomplete="off" size="2">
+											{% if orderdetail.quantity == orderdetail.product.stock_quantity %}
+												<a class="cart_quantity_up" href="{% url 'change_quantity' action='increase' product_id=orderdetail.product.id %}" onclick="return false;"> + </a>
+											{% else %}
+												<a class="cart_quantity_up" href="{% url 'change_quantity' action='increase' product_id=orderdetail.product.id %}"> + </a>
+											{% endif %}
+										</div>
+									</td>
+									<td class="cart_total" style="text-align: center;">
+										<p class="cart_total_price" style="font-size: 20px;">{{orderdetail.amount|intcomma}}đ</p>
+									</td>
+									<td class="cart_delete">
+										<a style="background-color: red;" class="cart_quantity_delete delete" href="{% url 'delete_in_cart' product_id=orderdetail.product.id %}" data-confirm="Are you sure to delete this product name: {{orderdetail.product.name}}?"><i class="fa fa-times"></i></a>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					<h3 style="text-align: right; background-color: rgb(219, 194, 194); margin-right: 60px" >Tổng tiền: {{total|intcomma}}đ</h3>
+					<a class="btn btn-default check_out" href="{% url 'checkout' %}" style="margin-left:960px; margin-top:0">Check Out</a>
+				</div>
+			{% else %}
+				<h2>{{ message }}</h2>
+			{% endif %}
+		</div>
+	</section> <!--/#cart_items-->
+
+	<script>
+		var deleteLinks = document.querySelectorAll('.delete');
+
+		for (var i = 0; i < deleteLinks.length; i++) {
+		deleteLinks[i].addEventListener('click', function(event) {
+			event.preventDefault();
+			
+			var choice = confirm(this.getAttribute('data-confirm'));
+
+			if (choice) {
+				window.location.href = this.getAttribute('href');
+			}
+		});
+		}
+	</script>
+{% endblock content %}

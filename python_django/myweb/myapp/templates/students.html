@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students list</title>
+    
+</head>
+<body>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Tuổi</th>
+            <th>Giới tính</th>
+            <th>Email</th>
+            <th>SĐT</th>
+        </tr>
+        {% for student in students %} <!-- 2 cặp dấu {} dùng để in giá trị biến ra -->
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{student.name}}</td>
+                <td>{{student.age}}</td>
+                {% if student.gender == True %}
+                    <td>Nam</td>
+                {% else %}
+                    <td>Nữ</td>
+                {% endif %}
+                <td>{{student.email}}</td>
+                <td>{{student.phone}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="myapp:add_student">Add student</a>
+    <style>
+        table, tr, td, th {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</body>
+</html>

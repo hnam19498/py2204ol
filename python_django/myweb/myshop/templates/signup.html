@@ -1,0 +1,54 @@
+{% extends 'base/base.html' %}
+{% block title %}
+    Đăng ký
+    {% load static %}
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <!-- <img src="{% static 'image/test_img.png' %}" style="width: 100%;"> -->
+            </div>
+            <div class="col-4">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-group {% if field.errors %} is-invalid {% else %} is-valid {% endif %}">
+                            {{ field.label }}
+                            {{ field }}
+                            {% for error in field.errors %}
+                                <div class="invalid-feedback" style="display: block">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-success btn-lg btn-block" value="signup">Sign up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            $("#id_username").change(function(){
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "validate_username" %}',
+                    data:{
+                        username: $(this).val(),
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                    },
+                    success: function(data){
+                        $("#id_username").addClass('is-valid').removeClass('is-invalid');
+                        $("#id_username").parent().find('div').remove();
+                    },
+                    error: function(xhr, textStatus, errorThrow){
+                        $("#id_username").addClass('is-invalid').removeClass('is-valid');
+                        $("#id_username").parent().append(`<div class = 'invalid-feedback'>${xhr.responseJSON.message}</div>`);
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock content %}

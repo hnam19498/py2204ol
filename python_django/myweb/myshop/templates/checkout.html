@@ -1,0 +1,91 @@
+{% extends 'base/baseshop.html' %}
+{% load static %}
+{% load humanize %}
+{% load shopfilter %}
+{% block title %}
+	Check out
+{% endblock title %}
+{% block content %}
+	<section id="cart_items">
+		<div class="container">
+			<div class="breadcrumbs">
+				<ol class="breadcrumb">
+				  <li><a href="{% url 'index' %}">Home</a></li>
+				  <li class="active">Check out</li>
+				</ol>
+			</div><!--/breadcrums-->
+
+			<div class="step-one">
+				<h2 class="heading">Step1</h2>
+			</div>
+
+			<div class="register-req">
+				<p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
+			</div><!--/register-req-->
+
+			<div class="shopper-informations">
+				<div class="row">
+					<div class="col-sm-12 clearfix">
+						<div class="bill-to">
+							<p>Bill To</p>
+							<div class="form-one">
+								<form method="post">
+									{% csrf_token %}
+									<input type="text" placeholder="Phone" name="phone">
+									<input type="text" placeholder="Address" name="address">
+									<input type="submit" value="Submit">
+								</form>
+							</div>
+						</div>
+					</div>			
+				</div>
+			</div>
+			<div class="review-payment">
+				<h2>Review & Payment</h2>
+			</div>
+
+			<div class="table-responsive cart_info">
+				<table class="table table-condensed">
+					<thead>
+						<tr class="cart_menu" style="text-align: center;">
+							<td class="image">Item</td>
+							<td class="description">Product name</td>
+							<td class="price">Price</td>
+							<td class="quantity">Quantity</td>
+							<td class="total">Total</td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+						{% for orderdetail in orderdetails %}
+							<tr>
+								<td class="cart_product">
+									<a href="{% url 'view_product' product_id=orderdetail.product.id %}"><img src="{{ orderdetail.product.image }}" alt="" style="width:55px;"></a>
+								</td>
+								<td class="cart_description" style="text-align: center;">
+									<h5 style="font-size: 18px;"><a href="{% url 'view_product' product_id=orderdetail.product.id %}">{{orderdetail.product.name}}</a></h5>
+									<p>Product ID: 1468-{{orderdetail.product.id}}</p>
+								</td>
+								<td class="cart_price">
+									<p style="text-align: center;">{{orderdetail.product.price|intcomma}}đ</p>
+								</td>
+								<td class="cart_quantity" >
+									<div class="cart_quantity_button" style="text-align: center;">
+										<h5 style="font-size: 18px;">{{orderdetail.quantity}}</h5>
+									</div>
+								</td>
+								<td class="cart_total" style="text-align: center;">
+									<p class="cart_total_price" style="font-size: 20px;">{{orderdetail.amount|intcomma}}đ</p>
+								</td>
+								<td class="cart_delete">
+									<a style="background-color: red;" class="cart_quantity_delete delete" href="{% url 'delete_in_cart' product_id=orderdetail.product.id %}" data-confirm="Are you sure to delete this product name: {{orderdetail.product.name}}?"><i class="fa fa-times"></i></a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section> <!--/#cart_items-->
+
+{% endblock content %}

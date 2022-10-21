@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update pet</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'mycss.css' %}" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+</head>
+<body>
+    <!-- <form action="" method="post">
+        {% csrf_token %}
+        <label for="pet_id">ID</label>
+        <input type="text" name="pet_id" id="pet_id"><br>
+        <label for="pet_name">Name</label>
+        <input type="text" name="pet_name" id="pet_name"><br>
+        <label for="pet_age">Age</label>
+        <input type="number" name="pet_age" id="pet_age" min="0"><br>
+        <label for="pet_type">Type</label>
+        <select id="pet_type" name="pet_type">
+            <option value="cat">Cat</option>
+            <option value="dog">Dog</option>
+        </select><br>
+        <label for="pet_weight">Weight</label>
+        <input type="number" name="pet_weight" id="pet_weight"><br>
+        <label for="pet_length">Length</label>
+        <input type="number" name="pet_length" id="pet_length"><br>
+        <label for="pet_color">Color</label>
+        <input type="color" name="pet_color" id="pet_color"><br>
+        <input type="checkbox" name="pet_vacinated" id="pet_vacinated" value="True">
+        <label for="pet_vacinated">Vacinated</label><br>
+        <input type="checkbox" name="pet_dewormed" id="pet_dewormed" value="True">
+        <label for="pet_dewormed">Dewormed</label><br>
+        <input type="checkbox" name="pet_sterilized" id="pet_sterilized" value="True">
+        <label for="pet_sterilized">Sterilized</label><br>
+        <input type="submit" value="add" name="" id=""> -->
+        <div class="container">
+            <div class="row">
+                <div class="col-6 offset-3">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="form-group  is-valid ">
+                            Id
+                            <input type="text" name="id" class="form-control" maxlength="10" required="" id="id_id" value="{{ pet_id }}" disabled>
+                        </div>
+                        <div class="form-group  is-valid ">
+                            Tên
+                            <input type="text" name="name" class="form-control" maxlength="20" required="" id="id_name" value="{{ pet_name }}" disabled>
+                            
+                        </div>
+                        {% for field in form %}
+                            {% if field.field.widget.input_type == 'checkbox' %}
+                                <div class="form-group form-check">
+                                    {{ field }}
+                                    {{ field.label }}
+                                    {% for error in field.errors %}
+                                        <div style="display: block;" class="invalid-feedback">
+                                            {{ error }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <div class="form-group {% if field.errors %} is-invalid {% else %} is-valid {% endif %}">
+                                    {{ field.label }}
+                                    {{ field }}
+                                    {% for error in field.errors %}
+                                        <div class="invalid-feedback" style="display: block">
+                                            {{ error }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        <input type="submit" value="update" name="" id="">
+                    </form>
+                </div>
+            </div>
+        </div>
+    <script src="{% static 'myjs.js' %}"></script>
+    <style>
+        .form-group.is-valid > input{
+            border-color: #28a745;
+            padding-right: calc(1.5em + .75rem)!important;
+            background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e);
+            background-repeat: no-repeat;
+            background-position: right calc(.375em + .1875rem) center;
+            background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+        }
+
+        .form-group.is-invalid > input{
+            border-color: #dc3545;
+            padding-right: calc(1.5em + .75rem)!important;
+            background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e);
+            background-repeat: no-repeat;
+            background-position: right calc(.375em + .1875rem) center;
+            background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+        }
+        
+    </style>
+</body>
+</html>
